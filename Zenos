@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Community Awareness Portal</title>
+<style>
+body { margin:0; font-family: Arial,sans-serif; background:#0f172a; color:white; }
+header { background:#020617; padding:20px; text-align:center; font-size:28px; font-weight:bold; }
+nav { display:flex; justify-content:center; background:#1e293b; }
+nav a { color:white; padding:14px 20px; text-decoration:none; }
+nav a:hover { background:#334155; }
+section { padding:40px 20px; }
+.box { background:#1e293b; padding:20px; margin:20px 0; border-radius:10px; }
+button { padding:10px 15px; margin-top:10px; border:none; border-radius:5px; background:#38bdf8; color:black; cursor:pointer; }
+button:hover { background:#22c55e; }
+textarea, input { width:100%; padding:10px; margin:10px 0; border-radius:5px; border:none; }
+.hidden { display:none; }
+.post { background:#334155; padding:10px; margin:5px 0; border-radius:5px; }
+</style>
+</head>
+<body>
+
+<header>🌐 Community Awareness Portal</header>
+
+<nav>
+<a href="#" onclick="showSection('home')">Home</a>
+<a href="#" onclick="showSection('corruption')">Corruption</a>
+<a href="#" onclick="showSection('farming')">Farming</a>
+<a href="#" onclick="showSection('trafficking')">Girls Trafficking</a>
+<a href="#" onclick="showSection('marketing')">Online Marketing</a>
+</nav>
+
+<!-- Home -->
+<section id="home">
+<h2>Welcome!</h2>
+<div class="box">
+<p>Select a topic below to learn and interact with it:</p>
+<button onclick="showSection('corruption')">Corruption</button>
+<button onclick="showSection('farming')">Farming</button>
+<button onclick="showSection('trafficking')">Girls Trafficking</button>
+<button onclick="showSection('marketing')">Online Marketing</button>
+</div>
+</section>
+
+<!-- Corruption -->
+<section id="corruption" class="hidden">
+<h2>Corruption Awareness</h2>
+<div class="box">
+<h3>Causes</h3>
+<ul><li>Lack of accountability</li><li>Poor law enforcement</li><li>Bribery & nepotism</li></ul>
+<h3>Solutions</h3>
+<ul><li>Education and awareness</li><li>Strict anti-corruption laws</li><li>Transparent governance</li></ul>
+<h3>Report / Demo Notes</h3>
+<input id="corruptionName" placeholder="Your Name">
+<textarea id="corruptionReport" placeholder="Write demo report..."></textarea>
+<button onclick="saveLocal('corruption')">Save Demo</button>
+<div id="corruptionPosts"></div>
+<button onclick="showSection('home')">Back to Home</button>
+</div>
+</section>
+
+<!-- Farming -->
+<section id="farming" class="hidden">
+<h2>Farming Guide 🌾</h2>
+<div class="box">
+<h3>How to Farm</h3><p>Plan crops, prepare soil, use irrigation and proper fertilizers.</p>
+<h3>Advantages</h3><ul><li>Provides food & income</li><li>Supports local economy</li><li>Maintains soil health</li></ul>
+<h3>Fertilizers</h3><ul><li>Nitrogen for growth</li><li>Phosphorus for roots</li><li>Potassium for fruit</li></ul>
+<h3>Demo Notes</h3>
+<textarea id="farmingNotes" placeholder="Write your notes..."></textarea>
+<button onclick="saveLocal('farming')">Save Notes</button>
+<div id="farmingPosts"></div>
+<button onclick="showSection('home')">Back to Home</button>
+</div>
+</section>
+
+<!-- Girls Trafficking -->
+<section id="trafficking" class="hidden">
+<h2>Girls Trafficking Awareness</h2>
+<div class="box">
+<h3>Causes</h3><ul><li>Poverty & lack of education</li><li>Criminal networks</li><li>Weak law enforcement</li></ul>
+<h3>Solutions</h3><ul><li>Education & awareness</li><li>Reporting suspicious activity</li><li>Support NGOs</li></ul>
+<h3>Awareness Demo</h3>
+<textarea id="traffickingNotes" placeholder="Type awareness message..."></textarea>
+<button onclick="saveLocal('trafficking')">Save Demo</button>
+<div id="traffickingPosts"></div>
+<button onclick="showSection('home')">Back to Home</button>
+</div>
+</section>
+
+<!-- Online Marketing -->
+<section id="marketing" class="hidden">
+<h2>Online Marketing & Stock Market</h2>
+<div class="box">
+<h3>How to Market Online</h3><ul><li>Create social media accounts</li><li>Post engaging content</li><li>Learn SEO & ads</li></ul>
+<h3>Stock Market Basics</h3><ul><li>Start with research</li><li>Invest small amounts</li><li>Track trends & news</li></ul>
+<h3>Demo Notes</h3>
+<textarea id="marketingNotes" placeholder="Write marketing ideas..."></textarea>
+<button onclick="saveLocal('marketing')">Save Demo</button>
+<div id="marketingPosts"></div>
+<button onclick="showSection('home')">Back to Home</button>
+</div>
+</section>
+
+<script>
+// Section navigation
+function showSection(id){
+    document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
+    document.getElementById(id).classList.remove('hidden');
+}
+
+// Save demo notes locally
+function saveLocal(section){
+    let text = document.getElementById(section+'Notes')?.value || document.getElementById(section+'Report')?.value;
+    if(!text || text.trim()===""){ alert("Please type something!"); return; }
+    let postsDiv = document.getElementById(section+'Posts');
+    let p = document.createElement('div');
+    p.className = 'post';
+    p.innerText = text;
+    postsDiv.prepend(p); // newest on top
+    localStorage.setItem(section, text); // demo save
+    alert('Saved locally (demo)');
+    if(document.getElementById(section+'Notes')) document.getElementById(section+'Notes').value="";
+    if(document.getElementById(section+'Report')) document.getElementById(section+'Report').value="";
+}
+</script>
+
+</body>
+</html>
